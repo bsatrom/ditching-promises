@@ -1,41 +1,76 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <p>
-      For guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://github.com/vuejs/vue-cli/tree/dev/docs" target="_blank">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+    <button v-on:click="locate">Locate Me</button>
+    <button v-on:click="getParticleDevices">Get Particle Devices</button>
+    <button v-on:click="getOnlineDevices">Get Online Devices</button>
+    <button v-on:click="getDeviceFunctions">Get Device Functions</button>
+    <button v-on:click="getFunctionsAsync">Get Functions (Async)</button>
   </div>
 </template>
 
 <script>
+import geolocation from '../geolocation';
+import particle from '../particle';
+let coords;
+
 export default {
-  name: 'HelloWorld',
+  name: 'HelloCallbacks',
   props: {
-    msg: String
+    msg: String,
+    coords: {}
+  },
+  methods: {
+    locate: function(event) {
+      /*geolocation.cbLocate(
+        function(pos) {
+          coords = pos;
+
+          console.log(this.coords);
+        },
+        function(err) {
+          console.log(err);
+        }
+      );*/
+      /* geolocation
+        .promiseLocate()
+        .then(pos => {
+          coords = pos;
+
+          console.log(coords);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      */
+      /*const asyncLocate = async () => {
+        console.log('starting');
+        const pos = await geolocation.promiseLocate();
+
+        coords = pos;
+        console.log(pos);
+        console.log('finished');
+      };
+
+      asyncLocate();*/
+    },
+    getParticleDevices: () => {
+      particle.listDevices().then(devices => console.table(devices));
+    },
+    getOnlineDevices: () => {
+      particle.onlineDevices().then(devices => console.table(devices));
+    },
+    getDeviceFunctions: () => {
+      particle
+        .deviceFunctions('carrot_pants')
+        .then(functions => console.table(functions))
+        .catch(err => console.log(err));
+    },
+    getFunctionsAsync: () => {
+      particle.deviceFunctionsAsync('carrot_pants');
+    }
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

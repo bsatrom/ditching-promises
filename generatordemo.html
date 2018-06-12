@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Generators and Ajax</title>
+</head>
+
+<body>
+  <script>
+    // ## Generators and Ajax
+    // Using Generators, we can wrap the built-in fetch and
+    // make our API calls look a bit more syncronous
+    function ajax(url) {
+      fetch(url)
+        .then(data => data.json())
+        .then(data => callsGenerator.next(data))
+        .catch(err => {
+          console.log('Seriously, stop trying to make fetch() happen!', err)
+        })
+    }
+
+    // With this wrapper, we can create a generator function that
+    // yields each call
+    function* steps() {
+      console.log('fetching beers')
+      const beers = yield ajax('http://api.react.beer/v2/search?q=imperial&type=beer');
+      console.log(beers)
+
+      console.log('fetching brandon')
+      const brandon = yield ajax('https://api.github.com/users/bsatrom');
+      console.log(brandon)
+
+      console.log('fetching RTJ')
+      const rtjAllDay = yield ajax('https://api.discogs.com/artists/3351365')
+      console.log(rtjAllDay)
+    }
+
+    // Then put the generator into a variable and kick it off
+    const callsGenerator = steps()
+    callsGenerator.next() // We call next() to kick things off
+  </script>
+</body>
+
+</html>
