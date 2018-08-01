@@ -4,7 +4,7 @@ const geolocation = {
   },
   promiseLocate: (...args) => {
     return new Promise((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(...args, resolve, reject);
+      navigator.geolocation.getCurrentPosition(resolve, reject);
     });
   }
 };

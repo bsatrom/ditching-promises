@@ -16,7 +16,7 @@
         .then(data => data.json())
         .then(data => callsGenerator.next(data))
         .catch(err => {
-          console.log('Seriously, stop trying to make fetch() happen!', err)
+          console.log(err)
         })
     }
 

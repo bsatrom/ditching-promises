@@ -22,37 +22,12 @@ export default {
   },
   methods: {
     locate: function(event) {
-      /*geolocation.cbLocate(
-        function(pos) {
-          coords = pos;
+      //geolocation.cbLocate(pos => console.log(pos), err => console.log(err));
 
-          console.log(this.coords);
-        },
-        function(err) {
-          console.log(err);
-        }
-      );*/
-      /* geolocation
+      geolocation
         .promiseLocate()
-        .then(pos => {
-          coords = pos;
-
-          console.log(coords);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-      */
-      /*const asyncLocate = async () => {
-        console.log('starting');
-        const pos = await geolocation.promiseLocate();
-
-        coords = pos;
-        console.log(pos);
-        console.log('finished');
-      };
-
-      asyncLocate();*/
+        .then(pos => console.log(pos))
+        .catch(err => console.log(err));
     },
     getParticleDevices: () => {
       particle.listDevices().then(devices => console.table(devices));

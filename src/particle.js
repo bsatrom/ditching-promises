@@ -7,7 +7,8 @@ const particle = {
     return new Promise((resolve, reject) => {
       particleAPI
         .listDevices({ auth: token })
-        .then(devices => resolve(devices), err => reject(err));
+        .then(devices => resolve(devices))
+        .catch(err => reject(err));
     });
   },
   onlineDevices: () => {
@@ -59,7 +60,7 @@ const particle = {
         auth: token
       });
 
-      if (!device) {
+      if (device) {
         console.table(deviceDetails.body.functions);
       } else {
         throw new Error();
