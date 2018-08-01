@@ -37,12 +37,12 @@ export default {
     },
     getDeviceFunctions: () => {
       particle
-        .deviceFunctions('carrot_pants')
+        .deviceFunctions('trash-panda')
         .then(functions => console.table(functions))
         .catch(err => console.log(err));
     },
     getFunctionsAsync: () => {
-      particle.deviceFunctionsAsync('carrot_pants');
+      particle.deviceFunctionsAsync('trash-panda');
     }
   }
 };
